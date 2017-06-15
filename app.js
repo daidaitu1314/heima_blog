@@ -2,6 +2,10 @@ var fs = require('fs');
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
+
+// 导入 session 模块
+var session = require('express-session');
+
 // 导入模板引擎
 var ejs = require('ejs');
 ejs.delimiter = '?';
@@ -18,6 +22,13 @@ app.engine('ejs', ejs.renderFile);
 
 // 使用解析body数据的中间件
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// 启用 session 中间件
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
 
 // 注册路由中间件
 /*app.use(indexRouter);

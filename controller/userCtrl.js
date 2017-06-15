@@ -1,9 +1,8 @@
 var UserModel = require('../model/UserModel');
+var md5 = require('blueimp-md5');
+var common = require('../common');
 
 module.exports = {
-  getIndexPage(req, res) { // 获取首页
-    res.render('index.ejs');
-  },
   getRegisterPage(req, res) {
     res.render('./user/register.ejs');
   },
@@ -15,6 +14,8 @@ module.exports = {
         }
       }).then((result) => {
         if (result === null) {
+          // 对注册密码进行加密处理
+          req.body.password = md5(req.body.password, common.passwordSalt);
           return UserModel.create(req.body);
         } else {
           return false;
@@ -42,7 +43,7 @@ module.exports = {
     UserModel.findOne({
       where: {
         username: userinfo.username,
-        password: userinfo.password
+        password: md5(userinfo.password, common.passwordSalt)
       }
     }).then((result) => {
       if (result === null) {
@@ -51,11 +52,23 @@ module.exports = {
           msg: '登录失败！用户不存在！'
         });
       } else {
+        // console.log(result.dataValues);
+        // 将登录的用户保存到session中
+        req.session.user = result.dataValues;
+        // 设置是否登录为true
+        req.session.islogin = true;
         res.json({
           err_code: 0,
           msg: '登录成功！'
         });
       }
+    });
+  },
+  userLogout(req, res) { // 注销登录
+    req.session.destroy(function (err) {
+      if (err) throw err;
+      console.log('用户退出成功！');
+      res.redirect('/');
     });
   }
 }

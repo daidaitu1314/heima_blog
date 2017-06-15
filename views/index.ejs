@@ -23,19 +23,24 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <!--登录注册按钮-->
         <div class="navbar-form navbar-right">
-          <a class="btn btn-success" href="/reg">注册</a>
-          <a class="btn btn-primary" href="/login">登录</a>
-          <a class="btn btn-danger" href="/logout">注销</a>
+          <? if (islogin){ ?>
+            <a class="btn btn-danger" href="/logout">注销</a>
+          <? } else { ?>
+            <a class="btn btn-success" href="/reg">注册</a>
+            <a class="btn btn-primary" href="/login">登录</a>
+          <? } ?>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发起 <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">文章</a></li>
-              <li><a href="#">问题</a></li>
-            </ul>
-          </li>
-        </ul>
+        <? if(islogin){ ?>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发起 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">文章</a></li>
+                <li><a href="#">问题</a></li>
+              </ul>
+            </li>
+          </ul>
+          <? } ?>
       </div>
       <!-- /.navbar-collapse -->
     </div>
