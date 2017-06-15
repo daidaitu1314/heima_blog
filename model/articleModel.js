@@ -19,15 +19,16 @@ var Article = Db.define('article', {
   },
   authorId: {
     type: Sequelize.INTEGER,
-    allowNull: false,
-    references: { // 设置外键引用
-      model: UserModel, // 引用的Model
-      key: 'id' // 引用的 key
-    }
+    allowNull: false
   }
 });
 
-// 设置实体之间的关联
-Article.belongsTo(UserModel, { foreignKey: 'authorId', targetKey: 'id' });
+// 设置实体之间的关联关系
+// 其中 foreignKey 表示当前表中的 外键
+// targetKey 表示关联表中的 主键
+Article.belongsTo(UserModel, {
+  foreignKey: 'authorId',
+  targetKey: 'id'
+});
 
 module.exports = Article;
