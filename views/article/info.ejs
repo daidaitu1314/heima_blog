@@ -1,0 +1,19 @@
+<?- include('../layouts/header.ejs') ?>
+
+  <h1 class="text-primary" style="padding: 0 32px 0 10px;">
+    文章详情页
+    <? if(user && user.id === article.authorId){ ?>
+      <a href="/article/edit?id=<?= article.id ?>" class="btn btn-info pull-right">编辑</a>
+    <? } ?>
+  </h1>
+  <hr>
+  <div class="container" style="border:1px solid #ddd; box-shadow:3px 3px 15px #ccc; margin-bottom:20px;">
+    <h1>
+      <?= article.title ?>
+    </h1>
+    <div>
+      <?- article.content ?>
+    </div>
+  </div>
+
+  <?- include('../layouts/footer.ejs') ?>
