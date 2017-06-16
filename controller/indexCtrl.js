@@ -11,7 +11,7 @@ module.exports = {
     ArticleModel.sync().then(() => {
       // 查询文章数据，并且获取总数据条数
       ArticleModel.findAndCountAll({
-        order: [
+        order: [ // 排序
           ['createdAt', 'desc']
         ],
         offset: (page - 1) * pageSize, // 起始位置
@@ -24,8 +24,8 @@ module.exports = {
           islogin: req.session.islogin,
           user: req.session.user,
           articles: results.rows,
-          totalPage: Math.ceil(results.count / pageSize),
-          nowPage: page
+          totalPage: Math.ceil(results.count / pageSize), // 总页码
+          nowPage: page // 当前页码
         };
         res.render('index.ejs', info);
       });
